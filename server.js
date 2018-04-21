@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 // Application dependencies
 const express = require('express');
 require('dotenv').config();
@@ -19,13 +17,18 @@ client.connect();
 client.on('error', err => console.error(err));
 
 
-app.get('/test', (req, res) => res.send('hello world'));
-
 // Application Middleware
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+// app.use(express.static('./public'));
+
+
+app.get('/test', (req, res) => res.send('hello world, it works'));
 
 // API Endpoints
 app.get('/api/v1/books', (req, res) => {
+  console.log('Retreiving all Books');
   client.query(`SELECT book_id, title, author, image_url, isbn FROM books;`)
     .then(results => res.send(results.rows))
     .catch(console.error);
