@@ -35,18 +35,21 @@ app.get('/api/v1/books', (req, res) => {
 });
 
 app.get('/api/v1/books/:id', (req, res) => {
+  console.log('Server selecting single book', req.params.id)
   client.query(`
   SELECT 
   book_id,
   title,
+  isbn,
   author,
-  img_url
+  image_url,
+  description
   FROM books
   WHERE book_id=$1;
   `,
     [req.params.id])
     .then(function(result) {
-      res.send(result.rows);
+      res.send(result.rows[0]);
     })
     .catch(function(err) {
       console.error(err)
