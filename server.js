@@ -57,6 +57,7 @@ app.get('/api/v1/books/:id', (req, res) => {
 });
 
 app.post('/api/v1/books', (req, res) => {
+  console.log('Entering Post Insert New Book');
   client.query(
     `
     INSERT INTO books (
