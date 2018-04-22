@@ -61,15 +61,19 @@ app.post('/api/v1/books', (req, res) => {
     `
     INSERT INTO books (
       title,
+      isbn,
       author,
-      img_url)
-    VALUES ($1, $2, $3)
+      image_url,
+      description)
+    VALUES ($1, $2, $3, $4, $5)
     ON CONFLICT DO NOTHING
     `,
     [
       req.body.title,
+      req.body.isbn,
       req.body.author,
-      req.body.img_url
+      req.body.img_url,
+      req.body.description
     ]),
   function(err) {
     if (err) console.error('error',err);
